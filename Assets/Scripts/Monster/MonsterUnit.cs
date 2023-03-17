@@ -4,29 +4,26 @@ using UnityEngine;
 
 public class MonsterUnit : MonoBehaviour
 {
-    public int maxHealth;
-    private int damage;
-    private MonsterHPManager monsterHPManager;
-    private PetHPManager petHPManager;
-
-    private Monster monster;
     [SerializeField] private MonsterSO monsterSO;
-    [SerializeField] private int level;
-
     [SerializeField] private MonsterBattleHud battleHud;
 
-    public States currentState;
+    public Monster monster;
     private MonsterAnimator animator;
-    private Transform player;
-    
+    private MonsterHPManager monsterHPManager;
+
+    private int maxHealth;
+    private int damage;
+
+    private int level;
+    private int startLevel = 1;
+    private int maxLevel = 5;
+
     [Header("Patrol Settings")]
     [SerializeField] private float maxDistanceX;
     [SerializeField] private float maxDistanceZ;
     [SerializeField] private LayerMask petLayer;
 
     private float attackTime;
-    [SerializeField] private float startAttackTime;
-
     private float waitTime;
     private float maximumX;
     private float minimumX;
@@ -35,23 +32,28 @@ public class MonsterUnit : MonoBehaviour
     private Vector3 randomPosition;
 
     private int petDamage;
+    private PetHPManager petHPManager;
+
+    public States currentState;
     private void Awake()
     {
         animator = GetComponentInChildren<MonsterAnimator>();
-        player = FindObjectOfType<PlayerMovement>().transform;
         monsterHPManager = GetComponent<MonsterHPManager>();
+
+        level = Random.Range(startLevel, maxLevel);
     }
     void Start()
     {
         monster = new Monster(monsterSO, level);
-
         currentState = States.Patrol;
 
         maximumX = transform.position.x + maxDistanceX;
         minimumX = transform.position.x - maxDistanceX;
         maximumZ = transform.position.z + maxDistanceZ;
         minimumZ = transform.position.z - maxDistanceZ;
+
         waitTime = 1f;
+
         randomPosition = GetRandomPosition();
         battleHud.gameObject.SetActive(false);
     }
@@ -159,6 +161,11 @@ public class MonsterUnit : MonoBehaviour
         {
             currentState = States.Win;
         }
+        
+        if(monsterHPManager.IsDeath())
+        {
+            currentState = States.Lost;
+        }
 
     }
 
@@ -174,7 +181,7 @@ public class MonsterUnit : MonoBehaviour
     }
 
 
-    private void BattleHudActivate(bool activate)
+    public void BattleHudActivate(bool activate)
     {
         battleHud.gameObject.SetActive(activate);
     }
@@ -192,20 +199,29 @@ public class MonsterUnit : MonoBehaviour
 
     public int GetDamage()
     {
-        damage = monsterSO.GetDamage() + level;
+        damage = monsterSO.GetDamage() + level * 2;
         return damage;
     }
 
     public int GetMaxHp()
     {
-        maxHealth = monsterSO.GetMaxHealth() + level;
+        maxHealth = monsterSO.GetMaxHealth() + level * 5;
         return maxHealth;
     }
-
 
     public int GetPetDamage()
     {
         return petDamage;
+    }
+
+    public int GetLevel()
+    {
+        return level;
+    }
+
+    public MonsterBattleHud GetBattleHud()
+    {
+        return battleHud;
     }
 
 }

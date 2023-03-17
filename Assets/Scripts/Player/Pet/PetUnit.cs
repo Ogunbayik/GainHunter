@@ -25,6 +25,7 @@ public class PetUnit : MonoBehaviour
 
     [SerializeField] private MonsterBattleHud battleHud;
     [SerializeField] private PlayerMovement player;
+    [SerializeField] private PlayerAnimation playerAnimator;
 
     [Header("Check Settings")]
     [SerializeField] private float checkRadius;
@@ -39,6 +40,7 @@ public class PetUnit : MonoBehaviour
     private int maxHealth;
     private int level;
 
+    private int monsterLevel;
     private int monsterDamage;
     private float monsterDistance;
     private Transform closestMonster;
@@ -83,7 +85,7 @@ public class PetUnit : MonoBehaviour
                 break;
             case States.Win: HandleWin();
                 break;
-            case States.Lose: Debug.Log("Sorry! You dont win this match!");
+            case States.Lose: Debug.Log("Lose");
                 break;
         }
 
@@ -97,13 +99,30 @@ public class PetUnit : MonoBehaviour
         transform.LookAt(followPoint.position);
         animator.IsWalkingAnimation(true);
 
+        if (closestMonster != null)
+        {
+            var closestMonster = GetClosestEnemy().GetComponent<MonsterUnit>();
+            var distanceBetweenMonster = Vector3.Distance(transform.position, closestMonster.transform.position);
+            var lookDistance = 9f;
+
+            if (distanceBetweenMonster <= lookDistance)
+            {
+                var monster = closestMonster.monster;
+                closestMonster.GetBattleHud().SetBattleHud(monster, false);
+                closestMonster.BattleHudActivate(true);
+            }
+            else
+            {
+                closestMonster.BattleHudActivate(false);
+            }
+        }
+
         checkSphere = Physics.CheckSphere(transform.position, checkRadius, monsterLayer);
         if(checkSphere)
         {
             currentState = States.Prepare;
             GameCamera.Instance.BattleCameraActivate();
         }
-
     }
 
     private void HandlePrepare()
@@ -139,6 +158,7 @@ public class PetUnit : MonoBehaviour
                 monsterDistance = distance;
                 monsterDamage = monster.GetDamage();
                 monsterHPManager = monster.GetComponent<MonsterHPManager>();
+                monsterLevel = monster.GetLevel();
             }
         }
         monsterDistance = Mathf.Infinity;
@@ -165,7 +185,7 @@ public class PetUnit : MonoBehaviour
 
         if(monsterHPManager.IsDeath())
         {
-            var battleExperience = 100;
+            var battleExperience = 10 * monsterLevel;
             levelManager.AddExperience(battleExperience);
             gameModeDelayTimer = 3f;
             currentState = States.Win;
@@ -195,16 +215,15 @@ public class PetUnit : MonoBehaviour
         maxHealth = monsterSO.GetMaxHealth() + levelManager.GetLevel() * 2;
         return maxHealth;
     }
-
-    public int GetMonsterDamage()
-    {
-        return monsterDamage;
-    }
-
     public int GetDamage()
     {
         damage = monsterSO.GetDamage() + levelManager.GetLevel();
         return damage;
+    }
+
+    public int GetMonsterDamage()
+    {
+        return monsterDamage;
     }
 
 

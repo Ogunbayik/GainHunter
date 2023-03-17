@@ -16,11 +16,15 @@ public class Monster
     [SerializeField] private MonsterSO monsterSO;
     public int level;
 
+    [HideInInspector]
     public string _name;
+    [HideInInspector]
     public Sprite sprite;
+    [HideInInspector]
+    public float movementSpeed;
+
     private int maxHealth;
     private int damage;
-    public float movementSpeed;
 
     public Monster(MonsterSO monsterSO, int level)
     {

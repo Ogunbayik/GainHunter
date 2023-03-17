@@ -9,17 +9,18 @@ public class MonsterAnimator : MonoBehaviour
     private const string ANIMATOR_DEATH_PARAMETER = "isDeath";
     private const string ANIMATOR_DANCE_PARAMETER = "isDancing";
 
-    [SerializeField] private MonsterHPManager hpManager;
-
+    private MonsterHPManager hpManager;
+    private Animator animator;
 
     [SerializeField] private Transform bulletPrefab;
     [SerializeField] private Transform firePoint;
-
-    private Animator animator;
+    private void Awake()
+    {
+        hpManager = GetComponentInParent<MonsterHPManager>();
+        animator = GetComponent<Animator>();
+    }
     void Start()
     {
-        animator = GetComponent<Animator>();
-
         hpManager.OnMonsterDead += HpManager_OnMonsterDead;
     }
 

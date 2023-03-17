@@ -7,12 +7,13 @@ public class MonsterHPManager : MonoBehaviour
 {
     public event EventHandler OnMonsterDead;
 
-    private MonsterUnit monster;
-    private SphereCollider sphereCollider;
-    [SerializeField] private MonsterTrigger monsterTrigger;
     [SerializeField] private MonsterHPBar hpBar;
 
-    [SerializeField] private int maxHealth;
+    private MonsterUnit monster;
+    private SphereCollider sphereCollider;
+    private MonsterTrigger monsterTrigger;
+
+    private int maxHealth;
     private float currentHealth;
     private float healthNormalized;
 
@@ -20,6 +21,7 @@ public class MonsterHPManager : MonoBehaviour
     private void Awake()
     {
         monster = GetComponent<MonsterUnit>();
+        monsterTrigger = GetComponent<MonsterTrigger>();
         sphereCollider = GetComponent<SphereCollider>();
     }
     void Start()

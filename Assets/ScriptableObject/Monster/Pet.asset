@@ -15,6 +15,6 @@ MonoBehaviour:
   monsterName: Red Eye
   movementSpeed: 1
   attackTimer: 2
-  maxHealth: 50
+  maxHealth: 15
   damage: 10
   sprite: {fileID: 21300000, guid: 5e77fde680a22fa44bcc011f1203329d, type: 3}

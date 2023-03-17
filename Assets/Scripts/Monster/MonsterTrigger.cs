@@ -7,8 +7,6 @@ public class MonsterTrigger : MonoBehaviour
 {
     public event EventHandler OnMonsterTakeDamage;
 
-    public MonsterHPManager hpManager;
-
     private void OnTriggerEnter(Collider other)
     {
         var monsterBullet = other.gameObject.GetComponent<MonsterBullet>();

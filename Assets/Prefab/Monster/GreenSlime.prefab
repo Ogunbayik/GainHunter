@@ -474,18 +474,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca52b1648222dae4181e9c20ca97631f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 0
   monsterSO: {fileID: 11400000, guid: 04dbccd5bbbf7884d8fc885fdbd67a5a, type: 2}
-  level: 5
   battleHud: {fileID: 891217751313604697}
-  currentState: 0
   maxDistanceX: 1
   maxDistanceZ: 1
-  startWaitTime: 3
   petLayer:
     serializedVersion: 2
     m_Bits: 128
-  startAttackTime: 2
+  currentState: 0
 --- !u!114 &891217751425697604
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -498,9 +494,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c3bccdabf2020c429c1a917942fc6b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monsterTrigger: {fileID: 8670287723844236347}
   hpBar: {fileID: 891217752477018166}
-  maxHealth: 0
 --- !u!114 &8670287723844236347
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -513,7 +507,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 970549ebf55ea1245a97379f6a749ac0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hpManager: {fileID: 891217751425697604}
 --- !u!135 &891217751425697605
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1090,7 +1083,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67065f47a65475b42ab702c9bd6052f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hpManager: {fileID: 891217751425697604}
   bulletPrefab: {fileID: 2910197038723408215, guid: 061d1686c0e3a6f429cd10b28c179ea7, type: 3}
   firePoint: {fileID: 891217751251892983}
 --- !u!1 &891217752134627569
