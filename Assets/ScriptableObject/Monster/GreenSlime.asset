@@ -15,6 +15,6 @@ MonoBehaviour:
   monsterName: Green Slime
   movementSpeed: 1
   attackTimer: 3
-  maxHealth: 15
+  maxHealth: 50
   damage: 5
   sprite: {fileID: 21300000, guid: 54ea00422a0da2a4a8339a695050721b, type: 3}

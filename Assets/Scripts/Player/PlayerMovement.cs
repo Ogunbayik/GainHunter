@@ -49,10 +49,10 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public void BattleModeActive(Vector3 obj)
+    public void BattleModeActive(Vector3 direction)
     {
         GetComponent<PlayerMovement>().enabled = false;
-        body.gameObject.transform.LookAt(obj);
+        body.gameObject.transform.LookAt(direction);
         playerAnimation.IsCheering(true);
     }
     public void BattleModeDeactive()

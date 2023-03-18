@@ -22,6 +22,7 @@ public class PetUnit : MonoBehaviour
     private PetAnimation animator;
     private PetLevelManager levelManager;
     private PetHPManager hpManager;
+    private BoxCollider boxCollider;
 
     [SerializeField] private MonsterBattleHud battleHud;
     [SerializeField] private PlayerMovement player;
@@ -53,6 +54,7 @@ public class PetUnit : MonoBehaviour
         animator = GetComponent<PetAnimation>();
         levelManager = GetComponent<PetLevelManager>();
         hpManager = GetComponent<PetHPManager>();
+        boxCollider = GetComponent<BoxCollider>();
     }
     void Start()
     {
@@ -195,12 +197,14 @@ public class PetUnit : MonoBehaviour
 
     public void HandleWin()
     {
+        boxCollider.enabled = false;
         animator.IsVictoryAnimation(true);
 
         gameModeDelayTimer -= Time.deltaTime;
 
         if(gameModeDelayTimer <= 0)
         {
+            boxCollider.enabled = true;
             GameCamera.Instance.VirtualCameraActivate();
             currentState = States.Follow;
             player.BattleModeDeactive();

@@ -27,6 +27,7 @@ public class PetLevelManager : MonoBehaviour
         if(currentExperience >= maxExperience)
         {
             currentExperience = 0;
+            maxExperience *= 2;
             level++;
         }
     }

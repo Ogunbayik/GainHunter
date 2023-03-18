@@ -19,6 +19,11 @@ public class MonsterBullet : MonoBehaviour
         transform.Translate(movementDirection * movementSpeed * Time.deltaTime);
     }
 
+    public void DestroySelf(float destroyTime)
+    {
+        Destroy(this.gameObject, destroyTime);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.GetComponent<PetBullet>())

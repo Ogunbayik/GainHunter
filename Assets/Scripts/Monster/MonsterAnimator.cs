@@ -52,11 +52,13 @@ public class MonsterAnimator : MonoBehaviour
     public void CreateBullet()
     {
         var speed = 5f;
+        var destroyTime = 1f;
         var direction = Vector3.forward;
         var bullet = Instantiate(bulletPrefab);
         bullet.transform.position = firePoint.position;
         bullet.transform.rotation = transform.rotation;
         bullet.GetComponent<MonsterBullet>().Movement(speed, direction);
+        bullet.GetComponent<MonsterBullet>().DestroySelf(destroyTime);
     }
 
 }

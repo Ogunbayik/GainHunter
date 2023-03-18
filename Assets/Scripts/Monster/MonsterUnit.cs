@@ -16,7 +16,7 @@ public class MonsterUnit : MonoBehaviour
 
     private int level;
     private int startLevel = 1;
-    private int maxLevel = 5;
+    private int maxLevel = 3;
 
     [Header("Patrol Settings")]
     [SerializeField] private float maxDistanceX;
