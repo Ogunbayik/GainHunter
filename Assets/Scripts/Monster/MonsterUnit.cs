@@ -15,8 +15,6 @@ public class MonsterUnit : MonoBehaviour
     private int damage;
 
     private int level;
-    private int startLevel = 1;
-    private int maxLevel = 3;
 
     [Header("Patrol Settings")]
     [SerializeField] private float maxDistanceX;
@@ -35,15 +33,15 @@ public class MonsterUnit : MonoBehaviour
     private PetHPManager petHPManager;
 
     public States currentState;
+    [SerializeField] private bool isBoss;
     private void Awake()
     {
         animator = GetComponentInChildren<MonsterAnimator>();
         monsterHPManager = GetComponent<MonsterHPManager>();
-
-        level = Random.Range(startLevel, maxLevel);
     }
     void Start()
     {
+        SetMonsterLevel();
         monster = new Monster(monsterSO, level);
         currentState = States.Patrol;
 
@@ -56,6 +54,30 @@ public class MonsterUnit : MonoBehaviour
 
         randomPosition = GetRandomPosition();
         battleHud.gameObject.SetActive(false);
+    }
+
+    private void SetMonsterLevel()
+    {
+        if (!isBoss)
+        {
+            var randomIndex = Random.Range(0, 100);
+            if (0 < randomIndex && randomIndex < 60)
+            {
+                level = 1;
+            }
+            else if (60 <= randomIndex && randomIndex < 90)
+            {
+                level = 2;
+            }
+            else if (randomIndex <= 90)
+            {
+                level = 3;
+            }
+        }
+        else
+        {
+            level = 5;
+        }
     }
 
     void Update()
@@ -200,6 +222,8 @@ public class MonsterUnit : MonoBehaviour
     public int GetDamage()
     {
         damage = monsterSO.GetDamage() + level * 2;
+        
+
         return damage;
     }
 
@@ -222,6 +246,11 @@ public class MonsterUnit : MonoBehaviour
     public MonsterBattleHud GetBattleHud()
     {
         return battleHud;
+    }
+
+    public bool IsBoss()
+    {
+        return isBoss;
     }
 
 }

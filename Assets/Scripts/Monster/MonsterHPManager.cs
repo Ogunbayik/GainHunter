@@ -26,8 +26,17 @@ public class MonsterHPManager : MonoBehaviour
     }
     void Start()
     {
-        maxHealth = monster.GetMaxHp();
-        currentHealth = maxHealth;
+        if(!monster.IsBoss())
+        {
+            maxHealth = monster.GetMaxHp();
+            currentHealth = maxHealth;
+        }
+        else
+        {
+            maxHealth = monster.GetMaxHp() * 3;
+            currentHealth = maxHealth;
+        }
+
         healthNormalized = currentHealth / maxHealth;
         hpBar.SetupHPBar(healthNormalized);
 

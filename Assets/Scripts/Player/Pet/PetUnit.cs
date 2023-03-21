@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 
 public class PetUnit : MonoBehaviour
@@ -39,7 +40,9 @@ public class PetUnit : MonoBehaviour
     private float attackTimer;
     private int damage;
     private int maxHealth;
+
     private int level;
+    private int battleExperience;
 
     private int monsterLevel;
     private int monsterDamage;
@@ -187,7 +190,7 @@ public class PetUnit : MonoBehaviour
 
         if(monsterHPManager.IsDeath())
         {
-            var battleExperience = 10 * monsterLevel;
+            battleExperience = 20 * monsterLevel;
             levelManager.AddExperience(battleExperience);
             gameModeDelayTimer = 3f;
             currentState = States.Win;
@@ -210,7 +213,7 @@ public class PetUnit : MonoBehaviour
             player.BattleModeDeactive();
             animator.IsVictoryAnimation(false);
             battleHud.ActivateBattleHud(false);
-            hpManager.RestartHP();
+            hpManager.RefreshHP();
         }
     }
 
@@ -228,6 +231,11 @@ public class PetUnit : MonoBehaviour
     public int GetMonsterDamage()
     {
         return monsterDamage;
+    }
+
+    public int GetBattleExperience()
+    {
+        return battleExperience;
     }
 
 

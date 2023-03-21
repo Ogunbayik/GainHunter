@@ -9,6 +9,7 @@ public class MonsterAnimator : MonoBehaviour
     private const string ANIMATOR_DEATH_PARAMETER = "isDeath";
     private const string ANIMATOR_DANCE_PARAMETER = "isDancing";
 
+    private MonsterUnit monster;
     private MonsterHPManager hpManager;
     private Animator animator;
 
@@ -16,6 +17,7 @@ public class MonsterAnimator : MonoBehaviour
     [SerializeField] private Transform firePoint;
     private void Awake()
     {
+        monster = GetComponent<MonsterUnit>();
         hpManager = GetComponentInParent<MonsterHPManager>();
         animator = GetComponent<Animator>();
     }

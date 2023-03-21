@@ -4,10 +4,7 @@ using UnityEngine;
 
 public class Grassy : MonoBehaviour
 {
-    private void Start()
-    {
-        
-    }
+
 
 
 }

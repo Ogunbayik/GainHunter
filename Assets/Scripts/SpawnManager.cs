@@ -9,6 +9,7 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private Transform monsterPrefab;
     [SerializeField] private float startSpawnDelayTimer;
     private float spawnDelayTimer;
+    private Grassy currentGrassy;
     private void Awake()
     {
         grassyPlaces = FindObjectsOfType<Grassy>();
@@ -37,22 +38,19 @@ public class SpawnManager : MonoBehaviour
         foreach (var grassy in grassyPlaces)
         {
             var canSpawn = grassy.GetComponentInChildren<SpawnPoint>().CanSpawn();
-
+            currentGrassy = grassy;
             if (canSpawn)
             {
                 spawnDelayTimer -= Time.deltaTime;
 
                 if (spawnDelayTimer <= 0)
                 {
-                    Debug.Log($"{grassy.name} place can spawn in there");
                     Instantiate(monsterPrefab, grassy.transform.position, Quaternion.identity);
                     spawnDelayTimer = startSpawnDelayTimer;
                 }
             }
         }
     }
-    
-
 
 
 

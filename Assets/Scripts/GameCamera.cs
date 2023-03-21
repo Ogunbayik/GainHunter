@@ -30,4 +30,10 @@ public class GameCamera : MonoBehaviour
         virtualCamera.SetActive(false);
     }
 
+    public GameObject GetBattleCamera()
+    {
+        return battleCamera;
+    }
+
+
 }

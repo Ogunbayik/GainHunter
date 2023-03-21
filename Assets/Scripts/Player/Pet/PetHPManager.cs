@@ -9,6 +9,7 @@ public class PetHPManager : MonoBehaviour
 
     [SerializeField] private MonsterHPBar hpBar;
 
+    private PetLevelManager petLevelManager;
     private PetTrigger petTrigger;
     private PetUnit pet;
     
@@ -18,6 +19,7 @@ public class PetHPManager : MonoBehaviour
     private bool isDeath;
     private void Awake()
     {
+        petLevelManager = GetComponent<PetLevelManager>();
         petTrigger = GetComponent<PetTrigger>();
         pet = GetComponent<PetUnit>();
     }
@@ -30,6 +32,18 @@ public class PetHPManager : MonoBehaviour
         hpBar.SetupHPBar(healthNormalized);
 
         petTrigger.OnPetTakeDamage += PetTrigger_OnTakeDamage;
+        petLevelManager.OnLevelUp += LevelManager_OnLevelUp;
+    }
+
+    private void LevelManager_OnLevelUp(object sender, EventArgs e)
+    {
+        UpdateHP(pet.GetMaxHealth());
+    }
+
+    public void UpdateHP(int hp)
+    {
+        maxHealth = hp;
+        currentHealth = maxHealth;
     }
 
     private void PetTrigger_OnTakeDamage(object sender, System.EventArgs e)
@@ -54,7 +68,7 @@ public class PetHPManager : MonoBehaviour
         }
     }
 
-    public void RestartHP()
+    public void RefreshHP()
     {
         currentHealth = maxHealth;
         healthNormalized = (float)currentHealth / maxHealth;
